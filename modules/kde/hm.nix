@@ -213,7 +213,7 @@ let
     {
       kcminputrc = formatConfig kcminputrc;
       kded5rc = formatConfig kded5rc;
-      kdeglobals = formatConfig kdeglobals;
+      kdeglobals = "${formatConfig kdeglobals}" + "${formatConfig colorscheme}";
     } ''
     mkdir "$out"
 
@@ -235,7 +235,7 @@ in
   config = lib.mkIf (config.stylix.enable && config.stylix.targets.kde.enable && pkgs.stdenv.hostPlatform.isLinux) {
     xdg = {
       systemDirs.config = [ "${configPackage}" ];
-      configFile."kdeglobals".text = "${formatConfig colorscheme}";
+      # configFile."kdeglobals".text = "${formatConfig colorscheme}";
     };
 
     systemd.user.sessionVariables = envVars;
